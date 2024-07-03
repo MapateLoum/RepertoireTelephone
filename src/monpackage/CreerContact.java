@@ -23,18 +23,39 @@ public class CreerContact
             System.out.println("Veuillez donner le nom du contact : ");
             String nom = scanner.nextLine();
 
+            System.out.print("Veuillez donner le numéro de téléphone du patient  : ");
             int numero;
-            System.out.println("Veuiller donner le numéro du contact : ");
             while (!scanner.hasNextInt()) 
             {
-            System.out.println("Erreur !! Veuiller donner un numero du format (XXXXXXXXX) : ");
-            scanner.next();		
+                System.out.println("Le numéro doit être un entier !");
+                scanner.next();
             }
-            numero= scanner.nextInt();	
+            numero = scanner.nextInt();
+    
+            while (numero / 10000000 != 77 && numero / 10000000 != 78 && numero / 10000000 != 76 && numero / 10000000 != 70 && numero / 10000000 != 75) 
+            {
+                System.out.println("Le numéro doit commencer par 77, 78, 76, 70 ou 75 !");
+                System.out.print("Veuillez entrer à nouveau le numéro de téléphone du patient : ");
+                while (!scanner.hasNextInt()) 
+                {
+                    System.out.println("Le numéro doit être un entier !");
+                    scanner.next();
+                }
+                numero = scanner.nextInt();
+            }
             scanner.nextLine();
 
-            System.out.println("Veuillez donner le mail du contact : ");
-            String mail = scanner.nextLine();
+            String mail;
+            do 
+            {
+                System.out.print("Veuillez saisir votre adresse e-mail : ");
+                mail = scanner.nextLine();
+    
+                if (mail.length() < 10 || !mail.substring(mail.length() - 10).equals("@gmail.com")) 
+                {
+                    System.out.println("L'adresse e-mail n'est pas valide. Veuillez saisir une adresse e-mail valide.");
+                }
+            } while (mail.length() < 10 || !mail.substring(mail.length() - 10).equals("@gmail.com"));
 
             String sql = "INSERT INTO Repertoire(prenom,nom,numero,mail) VALUES(?,?,?,?)";
             try (PreparedStatement pstmt = con.prepareStatement(sql)) 
